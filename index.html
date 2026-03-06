@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collective Intelligence — AI Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f5f0e8;
+    --cream: #ede8de;
+    --gold: #b8955a;
+    --gold-light: #d4b07a;
+    --rust: #8b4a2f;
+    --sage: #5a6b58;
+    --rule: rgba(14,14,14,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    padding: 2rem 4rem;
+    border-bottom: 1px solid var(--rule);
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .header-rule {
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+  }
+
+  .header-rule.right { opacity: 0.3; }
+
+  .logo-block {
+    text-align: center;
+    padding: 0 2rem;
+  }
+
+  .logo-mono {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .logo-name {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 6rem 4rem 4rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: end;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-headline {
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    margin-top: 2rem;
+    font-size: 1.05rem;
+    font-weight: 300;
+    color: rgba(14,14,14,0.65);
+    max-width: 38ch;
+    line-height: 1.75;
+  }
+
+  .hero-cta {
+    margin-top: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gold);
+    padding-bottom: 0.25rem;
+    transition: color 0.2s, gap 0.2s;
+  }
+
+  .hero-cta:hover { color: var(--gold); gap: 1.25rem; }
+
+  .hero-stat-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-left: 4rem;
+    border-left: 1px solid var(--rule);
+  }
+
+  .stat-item {}
+
+  .stat-num {
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(14,14,14,0.5);
+    margin-top: 0.4rem;
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .section-divider span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .section-divider::before, .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 4rem 5rem;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .service-card {
+    padding: 2.5rem;
+    border-right: 1px solid var(--rule);
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .service-card:last-child { border-right: none; }
+
+  .service-card:hover { background: var(--cream); }
+
+  .service-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .service-icon::before {
+    content: '';
+    display: block;
+    width: 1rem;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .service-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    letter-spacing: 0.01em;
+  }
+
+  .service-title em { font-style: italic; color: var(--gold); }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: rgba(14,14,14,0.6);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .service-num {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.5rem;
+    color: rgba(14,14,14,0.2);
+    letter-spacing: 0.2em;
+  }
+
+  /* ── VALUE PROPS ── */
+  .value-section {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 6rem 4rem;
+    animation: fadeUp 1s ease 0.5s both;
+  }
+
+  .value-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 8rem;
+    align-items: start;
+  }
+
+  .value-left {}
+
+  .value-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .value-heading {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.15;
+    color: var(--paper);
+  }
+
+  .value-heading em { font-style: italic; color: var(--gold-light); }
+
+  .value-body-text {
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(245,240,232,0.55);
+    font-weight: 300;
+  }
+
+  .value-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .value-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(245,240,232,0.1);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .value-item:first-child { border-top: 1px solid rgba(245,240,232,0.1); }
+
+  .value-item:hover .value-item-num { color: var(--gold-light); }
+
+  .value-item-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(245,240,232,0.25);
+    letter-spacing: 0.2em;
+    padding-top: 0.2rem;
+    transition: color 0.2s;
+  }
+
+  .value-item-content {}
+
+  .value-item-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--paper);
+    margin-bottom: 0.5rem;
+  }
+
+  .value-item-desc {
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.5);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* ── PROCESS ── */
+  .process-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 6rem 4rem;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+
+  .process-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-bottom: 4rem;
+  }
+
+  .process-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+
+  .process-title {
+    font-size: 2.2rem;
+    font-weight: 300;
+  }
+
+  .process-subtitle {
+    font-size: 0.9rem;
+    color: rgba(14,14,14,0.5);
+    max-width: 30ch;
+    text-align: right;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .process-steps::after {
+    content: '';
+    position: absolute;
+    top: 1.6rem;
+    left: 2.5rem;
+    right: 2.5rem;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .process-step {
+    padding: 0 1.5rem 0 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-dot {
+    width: 3rem;
+    height: 3rem;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--gold);
+    background: var(--paper);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .process-step:hover .step-dot {
+    background: var(--gold);
+    color: var(--paper);
+  }
+
+  .step-name {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-size: 0.82rem;
+    color: rgba(14,14,14,0.55);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── FOOTER CTA ── */
+  .footer-cta {
+    background: var(--cream);
+    border-top: 1px solid var(--rule);
+    padding: 5rem 4rem;
+    text-align: center;
+    animation: fadeUp 1s ease 0.7s both;
+  }
+
+  .footer-cta-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-cta-heading {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-cta-heading em { font-style: italic; color: var(--gold); }
+
+  .footer-cta-body {
+    font-size: 1rem;
+    color: rgba(14,14,14,0.55);
+    max-width: 50ch;
+    margin: 0 auto 2.5rem;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    border: 1px solid var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    transition: background 0.25s, color 0.25s;
+  }
+
+  .cta-btn:hover { background: var(--ink); color: var(--paper); }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-brand {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(14,14,14,0.35);
+  }
+
+  .footer-tagline {
+    font-style: italic;
+    font-size: 0.88rem;
+    color: rgba(14,14,14,0.4);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-1rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(1.5rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    header { padding: 1.5rem 2rem; }
+    .hero { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 2rem 2rem; }
+    .hero-stat-block { border-left: none; border-top: 1px solid var(--rule); padding-left: 0; padding-top: 2rem; flex-direction: row; gap: 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { border-right: none; border-bottom: 1px solid var(--rule); }
+    .value-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .process-steps::after { display: none; }
+    .services, .process-section { padding: 2rem 2rem 4rem; }
+    .value-section { padding: 4rem 2rem; }
+    .footer-cta { padding: 4rem 2rem; }
+    footer { padding: 1.5rem 2rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-rule"></div>
+  <div class="logo-block">
+    <span class="logo-mono">Est. 2025</span>
+    <div class="logo-name">Collective Intelligence</div>
+  </div>
+  <div class="header-rule right"></div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">AI Consulting for Small Business</div>
+    <h1 class="hero-headline">
+      Work smarter.<br>
+      Spend <em>less.</em><br>
+      Scale further.
+    </h1>
+    <p class="hero-sub">
+      We embed with your team, map every process, and rebuild your workflows around AI — replacing expensive SaaS subscriptions with custom intelligence that actually fits how you work.
+    </p>
+    <a href="#contact" class="hero-cta">Begin your assessment →</a>
+  </div>
+  <div class="hero-stat-block">
+    <div class="stat-item">
+      <div class="stat-num">40%</div>
+      <div class="stat-label">Average SaaS cost reduction</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">3×</div>
+      <div class="stat-label">Team throughput increase</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">6wk</div>
+      <div class="stat-label">Time to first deployment</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES DIVIDER -->
+<div class="section-divider">
+  <span>Our Services</span>
+</div>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">Discovery</div>
+      <h3 class="service-title">Process <em>Deep Dive</em></h3>
+      <p class="service-desc">We audit your current workflows end-to-end — the tools you use, the time you waste, and the manual steps that shouldn't exist. We document everything and build your AI opportunity map.</p>
+      <span class="service-num">01</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">Engineering</div>
+      <h3 class="service-title">Custom <em>AI Flows</em></h3>
+      <p class="service-desc">We design and build AI-powered automations tailored to your business — replacing off-the-shelf SaaS with intelligent pipelines connected to your own data and systems.</p>
+      <span class="service-num">02</span>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">Enablement</div>
+      <h3 class="service-title">Team <em>Uplift</em></h3>
+      <p class="service-desc">Your people don't get replaced — they get upgraded. We train every member of your team to leverage AI in their daily work, turning tool users into multipliers.</p>
+      <span class="service-num">03</span>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE PROPS -->
+<section class="value-section">
+  <div class="value-inner">
+    <div class="value-left">
+      <div class="value-eyebrow">Why It Works</div>
+      <h2 class="value-heading">Three levers.<br><em>Measurable</em><br>outcomes.</h2>
+      <p class="value-body-text">We don't sell AI for its own sake. Every engagement is anchored to real business outcomes — efficiency, cost, and capability.</p>
+    </div>
+    <div class="value-right">
+      <div class="value-item">
+        <span class="value-item-num">01</span>
+        <div class="value-item-content">
+          <div class="value-item-title">Worker Efficiency</div>
+          <div class="value-item-desc">AI-native workflows mean less time on repetitive work and more time on what matters. Your team does more, with less overhead — without burning out.</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <span class="value-item-num">02</span>
+        <div class="value-item-content">
+          <div class="value-item-title">SaaS Cost Reduction</div>
+          <div class="value-item-desc">Most small businesses pay for 8–15 overlapping SaaS tools. We replace entire categories with purpose-built AI flows and lean data infrastructure — often cutting software spend by 30–50%.</div>
+        </div>
+      </div>
+      <div class="value-item">
+        <span class="value-item-num">03</span>
+        <div class="value-item-content">
+          <div class="value-item-title">Compounding Intelligence</div>
+          <div class="value-item-desc">Your data stays in your systems. We build data stores that learn from your business over time — so every AI interaction gets smarter, not just faster.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section">
+  <div class="process-header">
+    <div>
+      <div class="process-eyebrow">Engagement Model</div>
+      <h2 class="process-title">From audit to automation.</h2>
+    </div>
+    <p class="process-subtitle">A structured four-phase approach that respects your time and delivers fast.</p>
+  </div>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-dot">01</div>
+      <div class="step-name">Discovery</div>
+      <p class="step-desc">We shadow your team and document every process, tool, and pain point in a structured opportunity map.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-dot">02</div>
+      <div class="step-name">Architecture</div>
+      <p class="step-desc">We design the AI stack — selecting models, building data stores, and mapping integrations to your existing systems.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-dot">03</div>
+      <div class="step-name">Build & Deploy</div>
+      <p class="step-desc">First workflows go live within six weeks. Iteration happens fast and in close collaboration with your team.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-dot">04</div>
+      <div class="step-name">Enablement</div>
+      <p class="step-desc">Training, documentation, and ongoing support — so your team owns the system and can evolve it without us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER CTA -->
+<section class="footer-cta" id="contact">
+  <div class="footer-cta-eyebrow">Get Started</div>
+  <h2 class="footer-cta-heading">Ready to <em>rethink</em> how you work?</h2>
+  <p class="footer-cta-body">Every engagement begins with a free 90-minute process assessment. We'll identify your top AI opportunities and give you a clear picture of the ROI — before you commit to anything.</p>
+  <a href="mailto:hello@collectiveintelligence.ai" class="cta-btn">Request a Free Assessment</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Collective Intelligence &nbsp;·&nbsp; AI Consulting</div>
+  <div class="footer-tagline">Intelligence, by design.</div>
+</footer>
+
+</body>
+</html>
